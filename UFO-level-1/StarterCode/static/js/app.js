@@ -3,38 +3,31 @@ var tableData = data;
 
 // YOUR CODE HERE!
 
-// Reference he table body
+// Reference the table body
 var tbody = d3.select("tbody");
+var button = d3.select("#filter-btn");
 
-// Use d3 to create the table and append the data to it
-tableData.forEach(function(UFO) {
-    console.log(UFO);
-    var row = tbody.append("tr");
-    Object.entries(UFO).forEach(function([key, value]) {
-        console.log(key, value);
-        var cell = row.append("td");
-        cell.text(value);
+function buildTable(data) {
+    tbody.html("");
+    data.forEach(function(UFO) {
+        var row = tbody.append("tr");
+        Object.entries(UFO).forEach(function([key, value]) {
+            var cell = row.append("td");
+            cell.text(value);
+        });
     });
-});
+};
 
-// Search by date 
+function buttonClick() {
+    var inputDate = d3.select("#datetime").property("value");
+    var searchResults = tableData;
 
-// Select the button
-var button = d3.select("#button");
+    if(inputDate){
+        searchResults = searchResults.filter(row => row.datetime === inputDate);
+    }
 
-button.on("click", function() {
+    buildTable(searchResults);
+}
 
-    // Select the input value
-    var inputElement = d3.select("#datetime");
-
-    // Get the value
-    var inputValue = inputElement.property("value");
-
-    console.log(inputValue);
-    console.log(tableData);
-
-    // Filter the data
-    var filteredData = tableData.filter(tableData => tableData.datetime === inputValue);
-
-    console.log(filteredData);
-});
+buildTable(data);
+d3.selectAll("#filter-btn").on("click",buttonClick);
