@@ -19,6 +19,13 @@ function buildTable(data) {
     });
 };
 
+// function multiFilter(data) {
+
+//     data.forEach(function(UFO) {
+//         data = data.filter(row => row.data === UFO);
+//     });
+// };
+
 // Create a function that will filter the data at the press of a button
 function buttonClick() {
     var inputDate = d3.select("#datetime").property("value");
@@ -28,6 +35,7 @@ function buttonClick() {
     var inputShape = d3.select("#shapename").property("value");
     var searchResults = tableData;
 
+    // Create conditions for the function to filter through different elements
     if(inputDate){
         searchResults = searchResults.filter(row => row.datetime === inputDate);
     }
@@ -44,6 +52,19 @@ function buttonClick() {
         searchResults = searchResults.filter(row => row.shape === inputShape);
     }
 
+    // multiFilter(searchResults)
+
+    // if (inputDate || inputCity || inputState || inputCountry || inputShape) {
+    //     searchResults = searchResults.filter(
+    //         row => row.datetime === inputDate,
+    //         row => row.city === inputCity,
+    //         row => row.state === inputState,
+    //         row => row.country === inputCountry,
+    //         row => row.shape === inputShape
+    //     );
+    // }
+
+    // Rebuild the table based on the filters
     buildTable(searchResults);
 }
 
